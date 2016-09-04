@@ -11,4 +11,7 @@ else
   if [ "$HOST" = i386-pc-linux-gnu ] ; then
       sudo apt-get install gcc-multilib g++-multilib;
   fi
+  if [ "$HOST" = i686-w64-mingw32 ] ; then
+      sudo apt-get install gcc-mingw-w64-i686 binutils-mingw-w64-i686 wine;
+  fi
 fi

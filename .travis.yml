@@ -10,6 +10,10 @@ matrix:
     - os: linux
       compiler: gcc
       env: HOST=i386-pc-linux-gnu
+  include:
+    - os: linux
+      compiler: i686-w64-mingw32-gcc
+      env: HOST=i686-w64-mingw32
 
 install:
   - ./.travis/install.sh
