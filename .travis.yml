@@ -10,9 +10,8 @@ matrix:
     - os: linux
       compiler: gcc
       env: HOST=i386-pc-linux-gnu
-  include:
     - os: linux
-      compiler: i686-w64-mingw32-gcc
+      compiler: gcc
       env: HOST=i686-w64-mingw32
 
 install:
@@ -21,6 +20,7 @@ install:
 script:
   - ./autogen.sh
   - if test x"$HOST" = x"i386-pc-linux-gnu"; then CC="$CC -m32"; CXX="$CXX -m32"; fi
+  - if test x"$HOST" = x"i686-w64-mingw32"; then CC="i686-w64-mingw32-gcc"; CXX="i686-w64-mingw32-g++"; fi
   - ./configure ${HOST+--host=$HOST}
   - make
   - make dist
