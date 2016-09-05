@@ -20,7 +20,7 @@ install:
 script:
   - ./autogen.sh
   - if test x"$HOST" = x"i386-pc-linux-gnu"; then CC="$CC -m32"; CXX="$CXX -m32"; fi
-  - if test x"$HOST" = x"i686-w64-mingw32"; then CC="i686-w64-mingw32-gcc"; CXX="i686-w64-mingw32-g++"; sh -e /etc/init.d/xvfb start; sleep 3; fi
+  - if test x"$HOST" = x"i686-w64-mingw32"; then CC="i686-w64-mingw32-gcc"; CXX="i686-w64-mingw32-g++"; sh -e /etc/init.d/xvfb start; sleep 3; wineserver -p; fi
   - ./configure ${HOST+--host=$HOST}
   - make
   - make dist
