@@ -7,7 +7,8 @@ if ![info exists boards_dir] {
     set boards_dir {}
 }
 
-lappend boards_dir ./.travis
+# Specific to travis builds...
+lappend boards_dir /home/travis/build/libffi/libffi/.travis
 
 verbose "Global Config File: target_triplet is $target_triplet" 2
 global target_list
