@@ -12,7 +12,7 @@ matrix:
       env: HOST=i386-pc-linux-gnu
     - os: linux
       compiler: gcc
-      env: HOST=i686-w64-mingw32 RUNTESTFLAGS="-v -v --target_board wine-sim ${expfile}" DEJAGNU=`pwd`/.travis/site.exp DISPLAY=:99.0
+      env: HOST=i686-w64-mingw32 RUNTESTFLAGS="--target_board wine-sim ${expfile}" DEJAGNU=`pwd`/.travis/site.exp DISPLAY=:99.0 WINEDEBUG=fixme-all
 
 install:
   - ./.travis/install.sh
