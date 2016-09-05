@@ -1,0 +1,23 @@
+# Copyright (C) 2016  Anthony Green
+
+# Run Windows executables on Linux with wine.
+set_board_info target_install {i686-w64-mingw32}
+
+load_generic_config "sim"
+
+set_board_info sim wine
+set_board_info sim,options ""
+set_board_info is_simulator 1
+
+# No default multilib options are needed for this board.
+process_multilib_options ""
+
+set_board_info compiler  "i686-w64-mingw32-gcc"
+set_board_info cflags    ""
+set_board_info ldflags   ""
+
+# No linker script needed.
+set_board_info ldscript ""
+
+# No support for signals on this target.
+set_board_info gdb,nosignals 1

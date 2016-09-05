@@ -12,7 +12,7 @@ matrix:
       env: HOST=i386-pc-linux-gnu
     - os: linux
       compiler: gcc
-      env: HOST=i686-w64-mingw32
+      env: HOST=i686-w64-mingw32 RUNTESTFLAGS="-v -v --target_board wine-sim ${expfile}" DEJAGNU=`pwd`/.travis/site.exp
 
 install:
   - ./.travis/install.sh
@@ -24,5 +24,5 @@ script:
   - ./configure ${HOST+--host=$HOST}
   - make
   - make dist
-  - make check
+  - make check RUNTESTFLAGS="$RUNTESTFLAGS"
   - cat */testsuite/libffi.log

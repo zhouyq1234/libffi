@@ -1,0 +1,20 @@
+# Copyright (C) 2016  Anthony Green
+#
+# This file is part of libffi.
+#
+# Make sure we look in the right place for the board description files.
+if ![info exists boards_dir] {
+    set boards_dir {}
+}
+
+lappend boards_dir ./.travis
+
+verbose "Global Config File: target_triplet is $target_triplet" 2
+global target_list
+
+case "$target_triplet" in {
+    { "i686-w64-mingw32" } {
+	set target_list "wine-sim"
+    }
+}
+
