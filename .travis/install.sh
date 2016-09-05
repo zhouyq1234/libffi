@@ -13,7 +13,5 @@ else
   fi
   if [ "$HOST" = i686-w64-mingw32 ] ; then
       sudo apt-get install gcc-mingw-w64-i686 binutils-mingw-w64-i686 wine Xvfb;
-      # to run wine headlessly, we need a virtual frame buffer
-      Xvfb :0 -screen 0 1024x768x16 &;
   fi
 fi
