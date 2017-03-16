@@ -6,7 +6,10 @@ platform:
   - x64
 
 build_script:
-  - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./autogen.sh; ls -l)"
+  - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./autogen.sh;)"
+  - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='`pwd`/msvcc.sh -clang-cl' CXX='`pwd`/msvcc.sh -clang-cl' LD=link CPP='clang-cl -EP'; ls -l)"
+  
+
   
   
 
