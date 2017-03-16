@@ -7,7 +7,7 @@ platform:
 
 build_script:
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./autogen.sh;)"
-  - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='/cygdrive/c/projects/libffi/msvcc.sh -clang-cl' CXX='/cygdrive/c/projects/libffi/msvcc.sh -clang-cl' LD=link CPP='clang-cl -EP'; cat `find ./ -name config.log`)"
+  - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='/cygdrive/c/projects/libffi/msvcc.sh' CXX='/cygdrive/c/projects/libffi/msvcc.sh' LD=link CPP='cl -nologo -EP'; cat `find ./ -name config.log`)"
   
 
   
