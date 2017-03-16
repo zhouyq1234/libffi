@@ -6,8 +6,7 @@ platform:
   - x64
 
 build_script:
-  - c:\cygwin\bin\sh -lc "env"
-  - c:\cygwin\bin\sh -lc "ls -l $OLDPWD"
-  - c:\cygwin\bin\sh -lc "(cd $OLDPWD; pwd; ls -l)"
+  - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./autogen; ls -l)"
+  
   
 
