@@ -1,0 +1,14 @@
+shallow_clone: true
+
+os: Visual Studio 2015
+platform:
+  - x86
+  - x64
+
+build_script:
+  - c:\cygwin\bin\sh -lc "echo Hi"
+  - c:\cygwin\bin\sh -lc "cat /proc/cpuinfo"
+  - c:\cygwin\bin\sh -lc "cat /proc/meminfo"
+  - c:\cygwin\bin\sh -lc "pwd"
+  - c:\cygwin\bin\sh -lc "ls -l"
+
