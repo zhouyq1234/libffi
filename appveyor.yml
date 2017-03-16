@@ -10,5 +10,6 @@ build_script:
   - c:\cygwin\bin\sh -lc "cat /proc/cpuinfo"
   - c:\cygwin\bin\sh -lc "cat /proc/meminfo"
   - c:\cygwin\bin\sh -lc "pwd"
-  - c:\cygwin\bin\sh -lc "ls -l"
+  - c:\cygwin\bin\sh -lc "env"
+  - c:\cygwin\bin\sh -lc "ls -l %APPVEYOR_BUILD_FOLDER%"
 
