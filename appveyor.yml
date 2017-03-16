@@ -6,7 +6,7 @@ platform:
   - x64
 
 build_script:
-  - ps: %ProgramFiles(x86)%\Microsoft Visual Studio 15.0\VC\bin\cl.exe -option
+  - c:\Program Files (x86)\Microsoft Visual Studio 15.0\VC\bin\cl.exe -option
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./autogen.sh;)"
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='/cygdrive/c/projects/libffi/msvcc.sh' CXX='/cygdrive/c/projects/libffi/msvcc.sh' LD=link CPP='cl -nologo -EP'; cat `find ./ -name config.log`)"
   - c:\cygwin\bin\sh -lc "find /cygdrive/c/Program\ Files\ (x86)"
