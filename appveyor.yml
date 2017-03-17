@@ -23,7 +23,7 @@ install:
 build_script:
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./autogen.sh;)"
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='/cygdrive/c/projects/libffi/msvcc.sh' CXX='/cygdrive/c/projects/libffi/msvcc.sh' LD=link CPP='cl -nologo -EP'; cat `find ./ -name config.log`)"
-  - ls C:\Program Files (x86)
+  - ls C:\"Program Files (x86)"
   
   
 
