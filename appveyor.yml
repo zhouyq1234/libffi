@@ -16,11 +16,10 @@ install:
 
 build_script:
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./autogen.sh;)"
-  - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='/cygdrive/c/projects/libffi/msvcc.sh' CXX='/cygdrive/c/projects/libffi/msvcc.sh' LD=link CPP='cl -nologo -EP'; cat `find ./ -name config.log`)"
-  - ls C:\"Program Files (x86)"
+  - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='/cygdrive/c/projects/libffi/msvcc.sh' CXX='/cygdrive/c/projects/libffi/msvcc.sh' LD=link CPP='cl -nologo -EP'; make)"
+  - c:\cygwin\bin\sh -lc "env"
   - set
-  - ls "%VS120COMNTOOLS%\..\..\bin"
-  - ls "%VS120COMNTOOLS%\..\..\bin\VC"
+  
 
 
 
