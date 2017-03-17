@@ -1,13 +1,13 @@
 shallow_clone: true
 
-image: Visual Studio 2017
+image: Visual Studio 2013
 platform:
   - x86
   - x64
 
 environment:
   matrix:
-    - VSVER: 17
+    - VSVER: 13
 
 matrix:
   allow_failures:
