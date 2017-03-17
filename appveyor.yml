@@ -1,13 +1,13 @@
 shallow_clone: true
 
-image: Visual Studio 2015
+image: Visual Studio 2017
 platform:
   - x86
   - x64
 
 environment:
   matrix:
-    - VSVER: 15
+    - VSVER: 17
 
 matrix:
   allow_failures:
@@ -23,6 +23,8 @@ install:
 build_script:
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./autogen.sh;)"
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='/cygdrive/c/projects/libffi/msvcc.sh' CXX='/cygdrive/c/projects/libffi/msvcc.sh' LD=link CPP='cl -nologo -EP'; cat `find ./ -name config.log`)"
+  - c:\cygwin\bin\sh -lc "find /cygdrive/c"
+  
 
   
 
