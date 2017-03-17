@@ -7,26 +7,21 @@ platform:
 
 environment:
   matrix:
-    - VSVER: 13
-
-matrix:
-  allow_failures:
-    # not included in AppVeyor right now
-    - platform: x64
-      VSVER: 10
+    - VSVER: 12
 
 install:
-  # - ps: $env:VSCOMNTOOLS=(Get-Content ("env:VS" + "$env:VSVER" + "0COMNTOOLS"))
-  #  - echo "Using Visual Studio %VSVER%.0 at %VSCOMNTOOLS%"
-  #  - call "%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %VCVARS_PLATFORM%
+  - ps: $env:VSCOMNTOOLS=(Get-Content ("env:VS" + "$env:VSVER" + "0COMNTOOLS"))
+  - echo "Using Visual Studio %VSVER%.0 at %VSCOMNTOOLS%"
+  - call "%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %VCVARS_PLATFORM%
 
 build_script:
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./autogen.sh;)"
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='/cygdrive/c/projects/libffi/msvcc.sh' CXX='/cygdrive/c/projects/libffi/msvcc.sh' LD=link CPP='cl -nologo -EP'; cat `find ./ -name config.log`)"
   - ls C:\"Program Files (x86)"
   - set
-  - ls %VS120COMNTOOLS%\..\..\bin
-  - ls %VS120COMNTOOLS%\..\..\bin\VC
+  - ls "%VS120COMNTOOLS%\..\..\bin"
+  - ls "%VS120COMNTOOLS%\..\..\bin\VC"
+
 
 
 
