@@ -5,10 +5,25 @@ platform:
   - x86
   - x64
 
+environment:
+  matrix:
+    - VSVER: 15
+
+matrix:
+  allow_failures:
+    # not included in AppVeyor right now
+    - platform: x64
+      VSVER: 10
+
+install:
+  - ps: $env:VSCOMNTOOLS=(Get-Content ("env:VS" + "$env:VSVER" + "0COMNTOOLS"))
+  - echo "Using Visual Studio %VSVER%.0 at %VSCOMNTOOLS%"
+  - call "%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %VCVARS_PLATFORM%
+
 build_script:
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./autogen.sh;)"
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='/cygdrive/c/projects/libffi/msvcc.sh' CXX='/cygdrive/c/projects/libffi/msvcc.sh' LD=link CPP='cl -nologo -EP'; cat `find ./ -name config.log`)"
-  - c:\cygwin\bin\sh -lc "find / -name vcvarsall.bat"
+
   
 
   
