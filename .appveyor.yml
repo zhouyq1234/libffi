@@ -28,20 +28,10 @@ install:
 
 build_script:
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./autogen.sh;)"
-  - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='/cygdrive/c/projects/libffi/msvcc.sh $X' CXX='/cygdrive/c/projects/libffi/msvcc.sh $X' LD=link CPP='cl -nologo -EP' --build=$BUILD --host=$HOST; cp src/x86/ffitarget.h include; make)"
-  
-
-
-
-
-  
-  
-
-  
-
-  
-  
-
-  
-  
+  - ps: >-
+      If ($env:Platform -Match "x86") {
+        c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='/cygdrive/c/projects/libffi/msvcc.sh' CXX='/cygdrive/c/projects/libffi/msvcc.sh' LD=link CPP='cl -nologo -EP' --build=$BUILD --host=$HOST; cp src/x86/ffitarget.h include; make)"
+      } Else {
+        c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='/cygdrive/c/projects/libffi/msvcc.sh -m64' CXX='/cygdrive/c/projects/libffi/msvcc.sh -m64' LD=link CPP='cl -nologo -EP' --build=$BUILD --host=$HOST; cp src/x86/ffitarget.h include; make)"
+      }
 
