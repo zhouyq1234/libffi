@@ -13,12 +13,12 @@ install:
   - ps: >-
       If ($env:Platform -Match "x86") {
           $env:VCVARS_PLATFORM="x86"
-          $env:MARCH=""
+          $env:X=""
           $env:BUILD="x86-pc-cygwin"
           $env:HOST="x86-pc-windows"
         } Else {
           $env:VCVARS_PLATFORM="amd64"
-          $env:MARCH="-m64"
+          $env:X="-m64"
           $env:BUILD="x86_64-pc-cygwin"
           $env:HOST="x86_64-pc-winnt"
       }
@@ -28,7 +28,7 @@ install:
 
 build_script:
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./autogen.sh;)"
-  - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='/cygdrive/c/projects/libffi/msvcc.sh $(MARCH)' CXX='/cygdrive/c/projects/libffi/msvcc.sh $(MARCH)' LD=link CPP='cl -nologo -EP' --build=$BUILD --host=$HOST; cp src/x86/ffitarget.h include; make)"
+  - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='/cygdrive/c/projects/libffi/msvcc.sh $X' CXX='/cygdrive/c/projects/libffi/msvcc.sh $X' LD=link CPP='cl -nologo -EP' --build=$BUILD --host=$HOST; cp src/x86/ffitarget.h include; make)"
   
 
 
