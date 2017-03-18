@@ -19,16 +19,14 @@ install:
   - ps: >-
       If ($env:Platform -Match "x86") {
           $env:VCVARS_PLATFORM="x86"
-          $env:X=""
           $env:BUILD="x86-pc-cygwin"
           $env:HOST="x86-pc-windows"
-          $env:CYG_ARCH=x86
+          $env:CYG_ARCH="x86"
         } Else {
           $env:VCVARS_PLATFORM="amd64"
-          $env:X="-m64"
           $env:BUILD="x86_64-pc-cygwin"
           $env:HOST="x86_64-pc-winnt"
-          $env:CYG_ARCH=x86_64
+          $env:CYG_ARCH=x86_64"
       }
   - 'appveyor DownloadFile http://cygwin.com/setup-%CYG_ARCH%.exe -FileName setup.exe'
   - 'setup.exe -qnNdO -R "%CYG_ROOT%" -s "%CYG_MIRROR%" -l "%CYG_CACHE%" -P dejagnu >NUL'
