@@ -27,12 +27,6 @@ install:
   - call "%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %VCVARS_PLATFORM%
 
 build_script:
-  - c:\cygwin\bin\sh -lc "env"
-  - set
-  - c:\cygwin\bin\sh -lc "which cl"
-  - c:\cygwin\bin\sh -lc "which cl.exe"
-  - c:\cygwin\bin\sh -lc "which ml64"
-  - c:\cygwin\bin\sh -lc "which ml64.exe"
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./autogen.sh;)"
   - c:\cygwin\bin\sh -lc "(cd $OLDPWD; ./configure CC='/cygdrive/c/projects/libffi/msvcc.sh -m64' CXX='/cygdrive/c/projects/libffi/msvcc.sh $MARCH' LD=link CPP='cl -nologo -EP' --build=$BUILD --host=$HOST; cp src/x86/ffitarget.h include; make)"
   
