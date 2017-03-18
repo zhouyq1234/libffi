@@ -5,7 +5,13 @@ platform:
   - x86
   - x64
 
+
+
 environment:
+  global:
+    CYG_ROOT: C:/cygwin
+    CYG_CACHE: C:/cygwin/var/cache/setup
+    CYG_MIRROR: http://mirrors.kernel.org/sourceware/cygwin/
   matrix:
     - VSVER: 12
 
@@ -16,12 +22,17 @@ install:
           $env:X=""
           $env:BUILD="x86-pc-cygwin"
           $env:HOST="x86-pc-windows"
+	  $env:CYG_ARCH=x86
         } Else {
           $env:VCVARS_PLATFORM="amd64"
           $env:X="-m64"
           $env:BUILD="x86_64-pc-cygwin"
           $env:HOST="x86_64-pc-winnt"
+	  $env:CYG_ARCH=x86_64
       }
+  - 'appveyor DownloadFile http://cygwin.com/setup-%CYG_ARCH%.exe -FileName setup.exe'
+  - 'setup.exe -qnNdO -R "%CYG_ROOT%" -s "%CYG_MIRROR%" -l "%CYG_CACHE%" -P dejagnu >NUL'
+  - '%CYG_ROOT%/bin/bash -lc "cygcheck -dc cygwin"'
   - ps: $env:VSCOMNTOOLS=(Get-Content ("env:VS" + "$env:VSVER" + "0COMNTOOLS"))
   - echo "Using Visual Studio %VSVER%.0 at %VSCOMNTOOLS%"
   - call "%VSCOMNTOOLS%\..\..\VC\vcvarsall.bat" %VCVARS_PLATFORM%
