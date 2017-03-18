@@ -23,14 +23,9 @@
    DEALINGS IN THE SOFTWARE.
    ----------------------------------------------------------------------- */
 
-#warn "GOT HERE"
-
 #include <ffi.h>
-#warn "GOT HERE"
 #include <ffi_common.h>
-#warn "GOT HERE"
 #include <stdlib.h>
-#warn "GOT HERE"
 
 /* Round up to FFI_SIZEOF_ARG. */
 
