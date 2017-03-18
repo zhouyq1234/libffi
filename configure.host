@@ -75,7 +75,9 @@ case "${host}" in
 	if test "${ax_cv_c_compiler_vendor}" = "microsoft"; then
 	  MSVC=1
 	  if test $ac_cv_sizeof_size_t = 4; then
-	    AC_MSG_ERROR(["libffi does not support microsoft tools for 32-bit windows."])
+	    echo libffi does not support microsoft tools for 32-bit windows hosts.
+	    echo Try porting src/x86/sysv.S to intel assembly format.
+	    UNSUPPORTED=1
           fi
 	fi
 	# All mingw/cygwin/win32 builds require -no-undefined for sharedlib.
