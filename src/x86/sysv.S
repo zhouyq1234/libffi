@@ -1,5 +1,6 @@
 /* -----------------------------------------------------------------------
-   sysv.S - Copyright (c) 2013  The Written Word, Inc.
+   sysv.S - Copyright (c) 2017  Anthony Green
+	  - Copyright (c) 2013  The Written Word, Inc.
 	  - Copyright (c) 1996,1998,2001-2003,2005,2008,2010  Red Hat, Inc.
    
    X86 Foreign Function Interface 
@@ -26,6 +27,8 @@
    ----------------------------------------------------------------------- */
 
 #ifndef __x86_64__
+#ifndef _MSC_VER
+	
 
 #define LIBFFI_ASM	
 #include <fficonfig.h>
@@ -1033,6 +1036,7 @@ L(SFDE9):
 L(EFDE9):
 #endif /* !FFI_NO_RAW_API */
 
+#endif /* ifndef _MSC_VER */	
 #endif /* ifndef __x86_64__ */
 
 #if defined __ELF__ && defined __linux__
