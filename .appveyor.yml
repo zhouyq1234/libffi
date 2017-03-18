@@ -15,7 +15,7 @@ install:
           $env:VCVARS_PLATFORM="x86"
           $env:MARCH=""
           $env:BUILD="x86-pc-cygwin"
-          $env:HOST="i386-win32"
+          $env:HOST="x86-pc-windows"
         } Else {
           $env:VCVARS_PLATFORM="amd64"
           $env:MARCH="-m64"
