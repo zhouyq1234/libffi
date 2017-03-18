@@ -38,7 +38,7 @@
 
 /* For code common to all platforms on x86 and x86_64. */
 #define X86_ANY
-#error "GOT HERE"
+
 #if defined (X86_64) && defined (__i386__)
 #undef X86_64
 #define X86
