@@ -13,14 +13,14 @@ install:
   - ps: >-
       If ($env:Platform -Match "x86") {
           $env:VCVARS_PLATFORM="x86"
-	  $env:MARCH=""
-	  $env:BUILD=x86-pc-cygwin
-	  $env:HOST=x86-pc-winnt
+          $env:MARCH=""
+          $env:BUILD=x86-pc-cygwin
+          $env:HOST=x86-pc-winnt
         } Else {
           $env:VCVARS_PLATFORM="amd64"
-	  $env:MARCH="-m64"
-	  $env:BUILD=x86_64-pc-cygwin
-	  $env:HOST=x86_64-pc-winnt
+          $env:MARCH="-m64"
+          $env:BUILD=x86_64-pc-cygwin
+          $env:HOST=x86_64-pc-winnt
       }
   - ps: $env:VSCOMNTOOLS=(Get-Content ("env:VS" + "$env:VSVER" + "0COMNTOOLS"))
   - echo "Using Visual Studio %VSVER%.0 at %VSCOMNTOOLS%"
