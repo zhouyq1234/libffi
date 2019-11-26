@@ -4,7 +4,7 @@ Status
 [![Build Status](https://travis-ci.org/libffi/libffi.svg?branch=master)](https://travis-ci.org/libffi/libffi)
 [![Build status](https://ci.appveyor.com/api/projects/status/8lko9vagbx4w2kxq?svg=true)](https://ci.appveyor.com/project/atgreen/libffi)
 
-libffi-3.3 was released on [TBD].  Check the libffi web
+libffi-3.3 was released on November 23, 2019.  Check the libffi web
 page for updates: <URL:http://sourceware.org/libffi/>.
 
 
@@ -51,11 +51,13 @@ tested:
 | --------------- | ---------------- | ----------------------- |
 | AArch64 (ARM64) | iOS              | Clang                   |
 | AArch64         | Linux            | GCC                     |
+| AArch64         | Windows          | MSVC                    |
 | Alpha           | Linux            | GCC                     |
 | Alpha           | Tru64            | GCC                     |
 | ARC             | Linux            | GCC                     |
 | ARM             | Linux            | GCC                     |
 | ARM             | iOS              | GCC                     |
+| ARM             | Windows          | MSVC                    |
 | AVR32           | Linux            | GCC                     |
 | Blackfin        | uClinux          | GCC                     |
 | HPPA            | HPUX             | GCC                     |
@@ -99,7 +101,6 @@ tested:
 | X86             | Interix          | GCC                     |
 | X86             | kFreeBSD         | GCC                     |
 | X86             | Linux            | GCC                     |
-| X86             | Mac OSX          | GCC                     |
 | X86             | OpenBSD          | GCC                     |
 | X86             | OS/2             | GCC                     |
 | X86             | Solaris          | GCC                     |
@@ -117,8 +118,7 @@ tested:
 | Xtensa          | Linux            | GCC                     |
 
 Please send additional platform test results to
-libffi-discuss@sourceware.org and feel free to update the wiki page
-above.
+libffi-discuss@sourceware.org.
 
 Installing libffi
 =================
@@ -126,10 +126,12 @@ Installing libffi
 First you must configure the distribution for your particular
 system. Go to the directory you wish to build libffi in and run the
 "configure" program found in the root directory of the libffi source
-distribution.
+distribution.  Note that building libffi requires a C99 compatible
+compiler.
 
-If you're building libffi directly from version control, configure won't
-exist yet; run ./autogen.sh first.
+If you're building libffi directly from git hosted sources, configure
+won't exist yet; run ./autogen.sh first.  This will require that you
+install autoconf, automake and libtool.
 
 You may want to tell configure where to install the libffi library and
 header files. To do that, use the ``--prefix`` configure switch.  Libffi
@@ -151,7 +153,7 @@ It's also possible to build libffi on Windows platforms with
 Microsoft's Visual C++ compiler.  In this case, use the msvcc.sh
 wrapper script during configuration like so:
 
-    path/to/configure CC=path/to/msvcc.sh CXX=path/to/msvcc.sh LD=link CPP="cl -nologo -EP"
+    path/to/configure CC=path/to/msvcc.sh CXX=path/to/msvcc.sh LD=link CPP="cl -nologo -EP" CPPFLAGS="-DFFI_BUILDING_DLL"
 
 For 64-bit Windows builds, use ``CC="path/to/msvcc.sh -m64"`` and
 ``CXX="path/to/msvcc.sh -m64"``.  You may also need to specify
@@ -160,12 +162,17 @@ For 64-bit Windows builds, use ``CC="path/to/msvcc.sh -m64"`` and
 It is also possible to build libffi on Windows platforms with the LLVM
 project's clang-cl compiler, like below:
 
-    path/to/configure CC="path/to/msvcc.sh -clang-cl" CXX="path/to/msvcc.sh -clang-cl" LD=link CPP="clang-cl -EP"
+    path/to/configure CC="path/to/msvcc.sh -clang-cl" CXX="path/to/msvcc.sh -clang-cl" LD=link CPP="clang-cl -EP" 
 
 When building with MSVC under a MingW environment, you may need to
 remove the line in configure that sets 'fix_srcfile_path' to a 'cygpath'
 command.  ('cygpath' is not present in MingW, and is not required when
 using MingW-style paths.)
+
+To build static library for ARM64 with MSVC using visual studio solution, msvc_build folder have
+   aarch64/Ffi_staticLib.sln
+   required header files in aarch64/aarch64_include/
+
 
 SPARC Solaris builds require the use of the GNU assembler and linker.
 Point ``AS`` and ``LD`` environment variables at those tool prior to
@@ -189,13 +196,18 @@ History
 
 See the git log for details at http://github.com/libffi/libffi.
 
-    3.3 TBD
+    3.3 Nov-23-19
         Add RISC-V support.
         New API in support of GO closures.
+        Add IEEE754 binary128 long double support for 64-bit Power
         Default to Microsoft's 64 bit long double ABI with Visual C++.
-          GNU compiler uses 80 bits (128 in memory) FFI_GNUW64 ABI.
-	Many new tests cases and bug fixes.
-    
+        GNU compiler uses 80 bits (128 in memory) FFI_GNUW64 ABI.
+        Add Windows on ARM64 (WOA) support.
+        Add Windows 32-bit ARM support.
+        Raw java (gcj) API deprecated.
+        Add pre-built PDF documentation to source distribution.
+        Many new test cases and bug fixes.
+        
     3.2.1 Nov-12-14
         Build fix for non-iOS AArch64 targets.
     
@@ -411,7 +423,9 @@ developers:
 
     aarch64             Marcus Shawcroft, James Greenhalgh
     alpha               Richard Henderson
+    arc                 Hackers at Synopsis
     arm                 Raffaele Sena
+    avr32               Bradley Smith
     blackfin            Alexandre Keunecke I. de Mendonca
     cris                Simon Posnjak, Hans-Peter Nilsson
     frv                 Anthony Green
@@ -419,6 +433,7 @@ developers:
     m32r                Kazuhiro Inaoka
     m68k                Andreas Schwab
     m88k                Miod Vallat
+    metag               Hackers at Imagination Technologies
     microblaze          Nathan Rossi
     mips                Anthony Green, Casey Marshall
     mips64              David Daney
@@ -429,6 +444,7 @@ developers:
     powerpc             Geoffrey Keating, Andreas Tobler,
                         David Edelsohn, John Hornkvist
     powerpc64           Jakub Jelinek
+    riscv               Michael Knyszek, Andrew Waterman, Stef O'Rear
     s390                Gerhard Tonn, Ulrich Weigand
     sh                  Kaz Kojima
     sh64                Kaz Kojima

@@ -29,7 +29,7 @@
    DEALINGS IN THE SOFTWARE.
    ----------------------------------------------------------------------- */
 
-#ifndef __x86_64__
+#if defined(__i386__) || defined(_M_IX86)
 #include <ffi.h>
 #include <ffi_common.h>
 #include <stdint.h>
@@ -49,6 +49,13 @@
 
 #if defined(__GNUC__) && !defined(__declspec)
 # define __declspec(x)  __attribute__((x))
+#endif
+
+#if defined(_MSC_VER) && defined(_M_IX86)
+/* Stack is not 16-byte aligned on Windows.  */
+#define STACK_ALIGN(bytes) (bytes)
+#else
+#define STACK_ALIGN(bytes) FFI_ALIGN (bytes, 16)
 #endif
 
 /* Perform machine dependent cif processing.  */
@@ -177,7 +184,7 @@ ffi_prep_cif_machdep(ffi_cif *cif)
       bytes = FFI_ALIGN (bytes, t->alignment);
       bytes += FFI_ALIGN (t->size, FFI_SIZEOF_ARG);
     }
-  cif->bytes = FFI_ALIGN (bytes, 16);
+  cif->bytes = bytes;
 
   return FFI_OK;
 }
@@ -285,7 +292,7 @@ ffi_call_int (ffi_cif *cif, void (*fn)(void), void *rvalue,
 	}
     }
 
-  bytes = cif->bytes;
+  bytes = STACK_ALIGN (cif->bytes);
   stack = alloca(bytes + sizeof(*frame) + rsize);
   argp = (dir < 0 ? stack + bytes : stack);
   frame = (struct call_frame *)(stack + bytes);
@@ -344,6 +351,15 @@ ffi_call_int (ffi_cif *cif, void (*fn)(void), void *rvalue,
 	{
 	  size_t za = FFI_ALIGN (z, FFI_SIZEOF_ARG);
 	  size_t align = FFI_SIZEOF_ARG;
+
+	  /* Issue 434: For thiscall and fastcall, if the paramter passed
+	     as 64-bit integer or struct, all following integer paramters
+	     will be passed on stack.  */
+	  if ((cabi == FFI_THISCALL || cabi == FFI_FASTCALL)
+	      && (t == FFI_TYPE_SINT64
+		  || t == FFI_TYPE_UINT64
+		  || t == FFI_TYPE_STRUCT))
+	    narg_reg = 2;
 
 	  /* Alignment rules for arguments are quite complex.  Vectors and
 	     structures with 16 byte alignment get it.  Note that long double
@@ -420,7 +436,7 @@ ffi_closure_inner (struct closure_frame *frame, char *stack)
   rvalue = frame->rettemp;
   pabi = &abi_params[cabi];
   dir = pabi->dir;
-  argp = (dir < 0 ? stack + cif->bytes : stack);
+  argp = (dir < 0 ? stack + STACK_ALIGN (cif->bytes) : stack);
 
   switch (flags)
     {
@@ -475,6 +491,15 @@ ffi_closure_inner (struct closure_frame *frame, char *stack)
 	  if (t == FFI_TYPE_STRUCT && ty->alignment >= 16)
 	    align = 16;
 
+	  /* Issue 434: For thiscall and fastcall, if the paramter passed
+	     as 64-bit integer or struct, all following integer paramters
+	     will be passed on stack.  */
+	  if ((cabi == FFI_THISCALL || cabi == FFI_FASTCALL)
+	      && (t == FFI_TYPE_SINT64
+		  || t == FFI_TYPE_UINT64
+		  || t == FFI_TYPE_STRUCT))
+	    narg_reg = 2;
+
 	  if (dir < 0)
 	    {
 	      /* ??? These reverse argument ABIs are probably too old
@@ -527,6 +552,7 @@ ffi_prep_closure_loc (ffi_closure* closure,
     case FFI_REGISTER:
       dest = ffi_closure_REGISTER;
       op = 0x68;  /* pushl imm */
+      break;
     default:
       return FFI_BAD_ABI;
     }
@@ -674,7 +700,7 @@ ffi_raw_call(ffi_cif *cif, void (*fn)(void), void *rvalue, ffi_raw *avalue)
 	}
     }
 
-  bytes = cif->bytes;
+  bytes = STACK_ALIGN (cif->bytes);
   argp = stack =
       (void *)((uintptr_t)alloca(bytes + sizeof(*frame) + rsize + 15) & ~16);
   frame = (struct call_frame *)(stack + bytes);
@@ -732,4 +758,4 @@ ffi_raw_call(ffi_cif *cif, void (*fn)(void), void *rvalue, ffi_raw *avalue)
   ffi_call_i386 (frame, stack);
 }
 #endif /* !FFI_NO_RAW_API */
-#endif /* !__x86_64__ */
+#endif /* __i386__ */

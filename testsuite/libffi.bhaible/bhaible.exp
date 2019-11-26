@@ -25,9 +25,18 @@ global compiler_vendor
 # flags to disable warnings for now.
 if { [string match $compiler_vendor "gnu"] } {
     set warning_options "-Wno-unused-variable -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-uninitialized";
-} else {
+}
+if { [string match $compiler_vendor "microsoft"] } {
+    # -wd4996  suggest use of vsprintf_s instead of vsprintf
+    # -wd4116  unnamed type definition
+    # -wd4101  unreferenced local variable
+    # -wd4244  warning about implicit double to float conversion
+    set warning_options "-wd4996 -wd4116 -wd4101 -wd4244";
+}
+if { ![string match $compiler_vendor "microsoft"] && ![string match $compiler_vendor "gnu"] } {
     set warning_options "-Wno-unused-variable -Wno-unused-parameter -Wno-uninitialized";
 }
+
 
 set tlist [lsort [glob -nocomplain -- $srcdir/$subdir/test-call.c]]
 
@@ -38,7 +47,13 @@ for {set i 1} {$i < 82} {incr i} {
 set tlist [lsort [glob -nocomplain -- $srcdir/$subdir/test-callback.c]]
 
 for {set i 1} {$i < 81} {incr i} {
-    run-many-tests $tlist [format "-DDGTEST=%d %s" $i $warning_options]
+    if { [libffi_feature_test "#if FFI_CLOSURES"] } {
+        run-many-tests $tlist [format "-DDGTEST=%d %s" $i $warning_options]
+    } else {
+        foreach test $tlist {
+            unsupported [format "%s -DDGTEST=%d %s" $test $i $warning_options]
+        }
+    }
 }
 
 dg-finish
