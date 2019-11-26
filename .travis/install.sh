@@ -54,7 +54,7 @@ else
 	    sudo apt-get install -y --allow-unauthenticated moxielogic-moxie-elf-gcc moxielogic-moxie-elf-gcc-c++ moxielogic-moxie-elf-gcc-libstdc++ moxielogic-moxie-elf-gdb-sim
 	    ;;
 	powerpc-linux-gnu)
-	    sudo apt-get install gcc-8-powerpc-linux-gnu g++-8-powerpc-linux-gnu
+	    sudo apt-get install \*gcc\* # gcc-8-powerpc-linux-gnu g++-8-powerpc-linux-gnu
 	    ;;
 	x86_64-w64-mingw32)
 	    sudo apt-get install gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 wine;
