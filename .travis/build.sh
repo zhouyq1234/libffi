@@ -29,7 +29,7 @@ function build_linux()
 {
     ./autogen.sh
     ./configure ${HOST+--host=$HOST} ${CONFIGURE_OPTIONS}
-    cat $(find ./ -name config.log)
+    cat /home/travis/build/atgreen/libffi/powerpc-unknown-linux-gnu/config.log
     make
     make dist
     make check RUNTESTFLAGS="-a $RUNTESTFLAGS"
