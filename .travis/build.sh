@@ -29,6 +29,7 @@ function build_linux()
 {
     ./autogen.sh
     ./configure ${HOST+--host=$HOST} ${CONFIGURE_OPTIONS}
+    cat config.log
     make
     make dist
     make check RUNTESTFLAGS="-a $RUNTESTFLAGS"
