@@ -28,8 +28,7 @@ function build_cfarm()
 function build_linux()
 {
     ./autogen.sh
-    ./configure ${HOST+--host=$HOST} ${CONFIGURE_OPTIONS}
-    cat /home/travis/build/atgreen/libffi/powerpc-unknown-linux-gnu/config.log
+    ./configure ${HOST+--host=$HOST} ${CONFIGURE_OPTIONS} || cat $HOST/config.log
     make
     make dist
     make check RUNTESTFLAGS="-a $RUNTESTFLAGS"
